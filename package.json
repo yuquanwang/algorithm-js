@@ -1,0 +1,39 @@
+{
+  "name": "algorithm-study",
+  "version": "1.0.0",
+  "description": "用js学习和实现算法与数据结构",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuquanwang/algorithm-js.git"
+  },
+  "keywords": [
+    "algorithm",
+    "js",
+    "study"
+  ],
+  "author": "Mutrix",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yuquanwang/algorithm-js/issues"
+  },
+  "homepage": "https://github.com/yuquanwang/algorithm-js#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.3",
+    "babel-jest": "^22.4.3",
+    "babel-preset-env": "^1.6.1",
+    "cross-env": "^5.1.4",
+    "eslint": "^4.19.1",
+    "eslint-plugin-import": "^2.11.0",
+    "jest": "^22.4.3"
+  },
+  "jest": {
+    "testRegex": "(/test/.*\\.spec.js)$"
+  }
+}
