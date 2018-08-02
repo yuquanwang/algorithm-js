@@ -4,7 +4,8 @@
   "description": "用js学习和实现算法与数据结构",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint --ext .js --ignore-path .gitignore ."
   },
   "repository": {
     "type": "git",
@@ -28,12 +29,16 @@
     "babel-eslint": "^8.2.3",
     "babel-jest": "^22.4.3",
     "babel-preset-env": "^1.6.1",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "cross-env": "^5.1.4",
     "eslint": "^4.19.1",
-    "eslint-plugin-import": "^2.11.0",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0",
     "jest": "^22.4.3"
   },
   "jest": {
+    "testEnvironment": "node",
     "testRegex": "(/test/.*\\.spec.js)$"
   }
 }
