@@ -1,11 +1,17 @@
 /**
  * Created by mutrix on 2018/8/2.
  */
+
+export class LinkedListNode {
+  constructor() {}
+  next() {
+    return { done: false, value: 1};
+  }
+}
+
 export default class LinkedList {
   constructor(items) {
-    this.head = {
-      next: () => {},
-    };
+    this.head = new LinkedListNode();
     this.tail = null;
   }
 
@@ -19,5 +25,3 @@ export default class LinkedList {
   }
 }
 
-export class LinkedListNode {
-}
