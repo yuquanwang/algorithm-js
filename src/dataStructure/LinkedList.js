@@ -3,25 +3,72 @@
  */
 
 export class LinkedListNode {
-  constructor() {}
-  next() {
-    return { done: false, value: 1};
+  constructor(item) {
+    if (item === undefined || item === null) {
+      throw new TypeError('LinkedListNode constructor arg can not be undefinded or null');
+    }
+    this.value = item;
+    this.next = null;
   }
 }
 
 export default class LinkedList {
-  constructor(items) {
-    this.head = new LinkedListNode();
+  constructor() {
+    this.head = null;
     this.tail = null;
+    this[Symbol.iterator] = function* () {
+      let node = this.head;
+      while (node.next) {
+        yield node.value;
+        node = node.next;
+      }
+      yield node.value;
+    };
   }
 
-  contains(ele) {
-    for (const item of this.items) {
-      if (item === ele) {
-        return true;
-      }
+  append(item) {
+    const newNode = new LinkedListNode(item);
+    if (!this.head) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      this.tail.next = newNode;
+      this.tail = newNode;
     }
-    return false;
+  }
+
+  prepend(item) {
+    const newNode = new LinkedListNode(item);
+    if (!this.head) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      newNode.next = this.head;
+      this.head = newNode;
+    }
+  }
+
+  insert(item, position) {
+    const newNode = new LinkedListNode(item);
+    let node = this.head;
+    let index = 0;
+
+    while (node && node.next && index !== position - 1) {
+      node = node.next;
+      index += 1;
+    }
+
+    if (!node || !node.next) {
+      this.append(item);
+      return;
+    }
+
+    const { next } = node.next;
+    newNode.next = next;
+    node.next = newNode;
+  }
+
+  delete(position) {
+    
   }
 }
-
