@@ -4,7 +4,6 @@
 import LinkedList, { LinkedListNode } from '../../src/dataStructure/LinkedList';
 
 describe('LinkedList', () => {
-
   let linkedListSample;
   let nullLinkedList;
   beforeEach(() => {
@@ -22,6 +21,7 @@ describe('LinkedList', () => {
     const oneList = new LinkedList(10);
     expect(oneList.head.value).toBe(10);
     expect(oneList.tail.value).toBe(10);
+
     const obj = { str: 'ok' };
     const linkedList = new LinkedList([3, 6, 9, obj]);
     expect(linkedList).toBeInstanceOf(LinkedList);
@@ -30,13 +30,11 @@ describe('LinkedList', () => {
     expect(linkedList.head.next.next.value).toBe(9);
     expect(linkedList.head.next.next.next.value).toEqual({ str: 'ok' });
     expect(linkedList.tail.value).toBe(obj);
-    const argsList = new LinkedList(3, 6, 9, obj);
-    expect(argsList).toBeInstanceOf(LinkedList);
-    expect(argsList.head.value).toBe(3);
-    expect(argsList.head.next.value).toBe(6);
-    expect(argsList.head.next.next.value).toBe(9);
-    expect(argsList.head.next.next.next.value).toEqual({ str: 'ok' });
-    expect(argsList.tail.value).toBe(obj);
+
+    expect(linkedListSample.head.value).toBe(1);
+    expect(linkedListSample.head.next.value).toBe(5);
+    expect(linkedListSample.head.next.next.value).toBe(4);
+    expect(linkedListSample.head.next.next.next.value).toBe(7);
   });
 
   it('具有首尾两个节点', () => {
@@ -53,6 +51,12 @@ describe('LinkedList', () => {
     const hasList = new LinkedList(4, 6, { str: 'ok' }, [4, 5, 6]);
     expect(hasList.has({ str: 'ok' })).toBeTruthy();
     expect(hasList.has([4, 5, 6])).toBeTruthy();
+  });
+
+  it('toString()方法', () => {
+    expect(new LinkedList().toString()).toBe('LinkedList: null;');
+    expect(new LinkedList(1, { str: 'ok' }).toString()).toBe(`LinkedList: 1, ${({ str: 'ok' }).toString()};`);
+    expect(linkedListSample.toString()).toBe('LinkedList: 1, 5, 4, 7;');
   });
 
   it('向后添加节点的方法', () => {

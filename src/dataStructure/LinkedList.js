@@ -59,6 +59,17 @@ export default class LinkedList {
     return false;
   }
 
+  toString() {
+    let str = 'LinkedList:';
+    let node = this.head;
+    while (node && node.next) {
+      str += ` ${node.value},`;
+      node = node.next;
+    }
+    str += node ? ` ${node.value};` : ' null;';
+    return str;
+  }
+
   append(item) {
     const newNode = new LinkedListNode(item);
     if (!this.head) {
