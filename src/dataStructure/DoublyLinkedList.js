@@ -1,12 +1,43 @@
-export default class DoublyLinkedList {
-  constructor() {
-    this.head = 1;
-    this.tail = 1;
+export class DoublyLinkedListNode {
+  constructor(value) {
+    this.previous = null;
+    this.value = value;
+    this.next = null;
   }
 }
 
-export class DoublyLinkedListNode {
-  constructor() {
-    this.a = 1;
+export default class DoublyLinkedList {
+  constructor(...args) {
+    if (!args.length || args[0] === null || args[0] === undefined) throw new TypeError('null or undefined is not allowed for the head');
+    let node = this.head;
+    args.forEach((item, index) => {
+      const newNode = new DoublyLinkedListNode(item);
+      if (index === 0) {
+        this.head = newNode;
+        node = this.head;
+      } else {
+        node.next = newNode;
+        newNode.previous = node;
+        node = newNode;
+      }
+    });
+    this.tail = node;
+
+    // eslint-disable-next-line
+    this[Symbol.iterator] = function* () {
+      let currentNode = this.head;
+      while (currentNode.next) {
+        yield currentNode.value;
+        currentNode = currentNode.next;
+      }
+      yield currentNode.value;
+    };
+  }
+
+  attachNext(item) {
+    const newNode = new DoublyLinkedListNode(item);
+    this.tail.next = newNode;
+    newNode.previous = this.tail;
+    this.tail = newNode;
   }
 }
