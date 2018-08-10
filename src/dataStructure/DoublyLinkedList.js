@@ -1,3 +1,5 @@
+import { clone } from 'lodash';
+
 export class DoublyLinkedListNode {
   constructor(value) {
     this.previous = null;
@@ -29,9 +31,37 @@ export default class DoublyLinkedList {
       while (currentNode.next) {
         yield currentNode.value;
         currentNode = currentNode.next;
+        if (currentNode === this.head) {
+          return;
+        }
       }
       yield currentNode.value;
     };
+  }
+
+  circle() {
+    this.head.previous = this.tail;
+    this.tail.next = this.head;
+    this.tail = null;
+  }
+
+  destructCircle() {
+    if (this.tail) {
+      throw new TypeError('not a circled list');
+    }
+    this.tail = this.head.previous;
+    this.tail.next = null;
+    this.head.previous = null;
+  }
+
+  toString() {
+    let str = 'DoublyLinkedList:';
+    for (const item of this) {
+      str += ` ${item},`;
+    }
+    str = str.replace(/\s/, this.tail ? ' ->' : ' <->');
+    str = str.replace(/,$/, this.tail ? '<-;' : ';');
+    return str;
   }
 
   attachNext(item) {
@@ -42,6 +72,10 @@ export default class DoublyLinkedList {
   }
 
   detachNext() {
+    if (this.tail.previous === null) {
+      this.destroy();
+      return;
+    }
     this.tail = this.tail.previous;
     this.tail.next = null;
   }
@@ -51,5 +85,29 @@ export default class DoublyLinkedList {
     this.head.previous = newNode;
     newNode.next = this.head;
     this.head = newNode;
+  }
+
+  detachPrevious() {
+    if (this.head.next === null) {
+      this.destroy();
+      return;
+    }
+    this.head = this.head.next;
+    this.head.previous = null;
+  }
+
+  combine(list) {
+    const temp = clone(this);
+    if (temp.tail === null) temp.destructCircle();
+    for (const item of list) {
+      temp.attachNext(item);
+    }
+    return temp;
+  }
+
+  destroy() {
+    delete this.head;
+    delete this.tail;
+    delete this[Symbol.iterator];
   }
 }

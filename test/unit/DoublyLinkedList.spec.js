@@ -34,6 +34,23 @@ describe('data structure: doubly linked list', () => {
     expect(() => { for (const item of list) { item.toString(); } }).not.toThrow();
   });
 
+  it('测试toString()方法', () => {
+    const list = new DoublyLinkedList(1, 2, 3, 4, 5);
+    expect(list.toString()).toBe('DoublyLinkedList: ->1, 2, 3, 4, 5<-;');
+  });
+
+  it('测试形成环形的情况', () => {
+    const list = new DoublyLinkedList(8848, 16634, 15785, 47461, 3416);
+    list.circle();
+    expect(list.head.previous.value).toBe(3416);
+    expect(list.tail).toBeNull();
+    expect(list.toString()).toBe('DoublyLinkedList: <->8848, 16634, 15785, 47461, 3416;');
+
+    const paraList = new DoublyLinkedList(3, 5, 9);
+    const combinedList = list.combine(paraList);
+    expect(combinedList.toString()).toBe('DoublyLinkedList: ->8848, 16634, 15785, 47461, 3416, 3, 5, 9<-;');
+  });
+
   it('测试attachNext方法', () => {
     const list = new DoublyLinkedList(1, 2, 3, 4);
     list.attachNext(7);
@@ -62,7 +79,29 @@ describe('data structure: doubly linked list', () => {
 
     const singleList = new DoublyLinkedList(5);
     singleList.detachNext();
-    expect(singleList).toBeNull();
+    expect(singleList).toEqual({});
+  });
+
+  it('测试detachPrevious方法', () => {
+    const list = new DoublyLinkedList(1, 2, 3);
+    list.detachPrevious();
+    expect(list.head.value).toBe(2);
+    expect(list.head.previous).toBeNull();
+    expect(list.head.next.value).toBe(3);
+    expect(list.tail.value).toBe(3);
+    expect(list.tail.next).toBeNull();
+    expect(list.tail.previous.value).toBe(2);
+
+    const singleList = new DoublyLinkedList(5);
+    singleList.detachPrevious();
+    expect(singleList).toEqual({});
+  });
+
+  it('连接两个DoublyLinkedList', () => {
+    const a = new DoublyLinkedList(31978);
+    const b = new DoublyLinkedList(3, 5, 7);
+    const combinedList = a.combine(b);
+    expect(combinedList.toString()).toBe('DoublyLinkedList: ->31978, 3, 5, 7<-;');
   });
 });
 
