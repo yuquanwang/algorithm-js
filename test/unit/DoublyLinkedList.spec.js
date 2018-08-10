@@ -15,12 +15,19 @@ describe('data structure: doubly linked list', () => {
     expect(() => new DoublyLinkedList(undefined)).toThrow(TypeError);
     expect(() => new DoublyLinkedList(0)).not.toThrow(TypeError);
 
-    const singleList = new DoublyLinkedList(3);
-    expect(singleList.head.value).toBe(3);
-    expect(singleList.tail.value).toBe(3);
+    const singleList = new DoublyLinkedList([4, 5, 7]);
+    expect(singleList.length).toBe(1);
+    expect(singleList.head.value).toEqual([4, 5, 7]);
+    expect(singleList.tail.value).toEqual([4, 5, 7]);
     expect(singleList.head).toBe(singleList.tail);
+    singleList.attachNext(8);
+    expect(singleList.has(8)).toBeTruthy();
+    expect(singleList.has([4, 5, 7])).toBeTruthy();
+    expect(singleList.has(0)).toBeFalsy();
+    expect(singleList.has(1)).toBeFalsy();
 
     const numberDoublyInstance = new DoublyLinkedList(1, 2, 3);
+    expect(numberDoublyInstance.length).toBe(3);
     expect(numberDoublyInstance.head.value).toBe(1);
     expect(numberDoublyInstance.head.previous).toBeNull();
     expect(numberDoublyInstance.head.next.value).toBe(2);
@@ -41,7 +48,9 @@ describe('data structure: doubly linked list', () => {
 
   it('测试形成环形的情况', () => {
     const list = new DoublyLinkedList(8848, 16634, 15785, 47461, 3416);
+    expect(() => { list.destructCircle(); }).toThrow(TypeError);
     list.circle();
+    expect(list.length).toBe(5);
     expect(list.head.previous.value).toBe(3416);
     expect(list.tail).toBeNull();
     expect(list.toString()).toBe('DoublyLinkedList: <->8848, 16634, 15785, 47461, 3416;');

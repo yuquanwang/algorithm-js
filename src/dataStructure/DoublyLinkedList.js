@@ -1,4 +1,4 @@
-import { clone } from 'lodash';
+import { clone, isEqual } from 'lodash';
 
 export class DoublyLinkedListNode {
   constructor(value) {
@@ -37,6 +37,24 @@ export default class DoublyLinkedList {
       }
       yield currentNode.value;
     };
+
+    const getLength = () => {
+      let i = 0;
+      // eslint-disable-next-line no-unused-vars
+      for (const item of this) {
+        i += 1;
+      }
+      return i;
+    };
+
+    this.length = getLength();
+  }
+
+  has(value) {
+    for (const item of this) {
+      if (isEqual(value, item)) return true;
+    }
+    return false;
   }
 
   circle() {
@@ -109,5 +127,6 @@ export default class DoublyLinkedList {
     delete this.head;
     delete this.tail;
     delete this[Symbol.iterator];
+    delete this.length;
   }
 }

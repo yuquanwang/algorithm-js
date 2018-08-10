@@ -21,16 +21,14 @@ describe('LinkedList', () => {
     const oneList = new LinkedList(10);
     expect(oneList.head.value).toBe(10);
     expect(oneList.tail.value).toBe(10);
+    expect(oneList.length).toBe(1);
 
     const obj = { str: 'ok' };
     const linkedList = new LinkedList([3, 6, 9, obj]);
-    expect(linkedList).toBeInstanceOf(LinkedList);
-    expect(linkedList.head.value).toBe(3);
-    expect(linkedList.head.next.value).toBe(6);
-    expect(linkedList.head.next.next.value).toBe(9);
-    expect(linkedList.head.next.next.next.value).toEqual({ str: 'ok' });
-    expect(linkedList.tail.value).toBe(obj);
+    expect(linkedList.head.value).toEqual([3, 6, 9, obj]);
 
+    expect(linkedListSample.length).toBe(4);
+    expect(() => linkedListSample.getLength()).toThrow();
     expect(linkedListSample.head.value).toBe(1);
     expect(linkedListSample.head.next.value).toBe(5);
     expect(linkedListSample.head.next.next.value).toBe(4);
@@ -79,100 +77,20 @@ describe('LinkedList', () => {
     expect(linkedListSample.head.value).toBe(9);
   });
 
-  it('插入节点的方法：正常情况', () => {
-    linkedListSample.insert(10, 2);
-    const first = linkedListSample.head;
-    const second = first.next;
-    const third = second.next;
-    expect(third.value).toBe(10);
-  });
-
-  it('插入节点的方法：空list插入', () => {
-    nullLinkedList.insert(3);
-    expect(nullLinkedList.head.value).toBe(3);
-  });
-
-  it('插入节点的方法：参数缺省', () => {
-    linkedListSample.insert(17);
-    expect(linkedListSample.tail.value).toBe(17);
-  });
-
-  it('插入节点的方法：index超出总长度', () => {
-    linkedListSample.insert(17, 10);
-    expect(linkedListSample.tail.value).toBe(17);
-  });
-
-  it('插入节点的方法: 尾部节点', () => {
-    linkedListSample.insert(54, 4);
-    expect(linkedListSample.tail.value).toBe(54);
-  });
-
-  it('从某个节点后方插入节点: 正常情况', () => {
-    linkedListSample.insertAfter(5, 20);
-    const first = linkedListSample.head;
-    const second = first.next;
-    const third = second.next;
-    expect(third.value).toBe(20);
-    expect(third.next.value).toBe(4);
-
-    const twiceInsertLinst = new LinkedList(2, 3, 2, 6);
-    twiceInsertLinst.insertAfter(2, 20, 2);
-    const one = twiceInsertLinst.head;
-    const two = one.next;
-    const three = two.next;
-    expect(one.next.value).toBe(3);
-    expect(three.next.value).toBe(20);
-  });
-
-  it('从某个节点后方插入节点: 尾部节点', () => {
-    linkedListSample.insertAfter(7, 50);
-    expect(linkedListSample.tail.value).toBe(50);
-  });
-
-  it('从某个节点后方插入节点: 无该节点', () => {
-    expect(() => linkedListSample.insertAfter(8, 50)).toThrow(RangeError);
-  });
-
-  it('删除节点的方法：正常情况', () => {
-    linkedListSample.removeFrom(2);
-    const first = linkedListSample.head;
-    const second = first.next;
-    const third = second.next;
-    expect(third.value).toBe(7);
-  });
-
-  it('删除节点的方法：节点不存在', () => {
-    expect(() => nullLinkedList.removeFrom()).toThrow(RangeError);
-    expect(() => linkedListSample.removeFrom(10)).toThrow(RangeError);
-    expect(() => linkedListSample.removeFrom(10)).toThrow(/3/);
-  });
-
   it('删除节点的方法：删除尾部节点tail', () => {
-    linkedListSample.removeFrom();
+    linkedListSample.detachTail();
     expect(linkedListSample.tail.value).toBe(4);
   });
 
   it('删除某个节点: 正常情况', () => {
-    linkedListSample.remove(5);
-    expect(linkedListSample.has(5)).toBeFalsy();
-
     const linkedList = new LinkedList(3, 5, 8, 1);
-    linkedList.remove(3);
-    expect(linkedList.has(3)).toBeFalsy();
-    expect(linkedList.head.value).toBe(5);
-    linkedList.remove(1);
+    linkedList.detachTail();
     expect(linkedList.has(1)).toBeFalsy();
     expect(linkedList.tail.value).toBe(8);
   });
 
-  it('删除某个节点: 节点不存在', () => {
-    expect(() => linkedListSample.remove(10)).toThrow(RangeError);
-  });
-
   it('LinkedList可以使用迭代器', () => {
-    for (const item of linkedListSample) {
-      expect(typeof item).toBe('number');
-    }
+    expect(() => { for (const item of linkedListSample) { item.toString(); } }).not.toThrow();
   });
 
   it('类型错误', () => {
