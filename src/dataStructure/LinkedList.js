@@ -31,7 +31,8 @@ export default class LinkedList {
       }
     }
 
-    this[Symbol.iterator] = function*() {
+    // eslint-disable-next-line func-names
+    this[Symbol.iterator] = function* () {
       let node = this.head;
       while (node.next) {
         yield node.value;
