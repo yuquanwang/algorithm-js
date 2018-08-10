@@ -40,4 +40,16 @@ export default class DoublyLinkedList {
     newNode.previous = this.tail;
     this.tail = newNode;
   }
+
+  detachNext() {
+    this.tail = this.tail.previous;
+    this.tail.next = null;
+  }
+
+  attachPrevious(item) {
+    const newNode = new DoublyLinkedListNode(item);
+    this.head.previous = newNode;
+    newNode.next = this.head;
+    this.head = newNode;
+  }
 }

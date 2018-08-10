@@ -14,6 +14,12 @@ describe('data structure: doubly linked list', () => {
     expect(() => new DoublyLinkedList(null)).toThrow(TypeError);
     expect(() => new DoublyLinkedList(undefined)).toThrow(TypeError);
     expect(() => new DoublyLinkedList(0)).not.toThrow(TypeError);
+
+    const singleList = new DoublyLinkedList(3);
+    expect(singleList.head.value).toBe(3);
+    expect(singleList.tail.value).toBe(3);
+    expect(singleList.head).toBe(singleList.tail);
+
     const numberDoublyInstance = new DoublyLinkedList(1, 2, 3);
     expect(numberDoublyInstance.head.value).toBe(1);
     expect(numberDoublyInstance.head.previous).toBeNull();
@@ -42,6 +48,21 @@ describe('data structure: doubly linked list', () => {
     expect(list.head.value).toBe(7);
     expect(list.head.next.value).toBe(1);
     expect(list.head.previous).toBeNull();
+  });
+
+  it('测试detachNext方法', () => {
+    const list = new DoublyLinkedList(1, 2, 3);
+    list.detachNext();
+    expect(list.head.value).toBe(1);
+    expect(list.head.previous).toBeNull();
+    expect(list.head.next.value).toBe(2);
+    expect(list.tail.value).toBe(2);
+    expect(list.tail.next).toBeNull();
+    expect(list.tail.previous.value).toBe(1);
+
+    const singleList = new DoublyLinkedList(5);
+    singleList.detachNext();
+    expect(singleList).toBeNull();
   });
 });
 
