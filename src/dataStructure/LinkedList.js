@@ -26,11 +26,11 @@ export default class LinkedList {
     // eslint-disable-next-line func-names
     this[Symbol.iterator] = function* () {
       let node = this.head;
-      while (node.next) {
+      while (node && node.next) {
         yield node.value;
         node = node.next;
       }
-      yield node.value;
+      yield node ? node.value : null;
     };
 
     const getLength = () => {
@@ -43,7 +43,7 @@ export default class LinkedList {
       return length;
     };
 
-    this.length = getLength();
+    this.size = getLength();
   }
 
   has(item) {
@@ -55,13 +55,10 @@ export default class LinkedList {
 
   toString() {
     let str = 'LinkedList:';
-    let node = this.head;
-    while (node && node.next) {
-      str += ` ${node.value},`;
-      node = node.next;
+    for (const item of this) {
+      str += ` ${item},`;
     }
-    str += node ? ` ${node.value};` : ' null;';
-    return str;
+    return str.replace(/,$/, ';');
   }
 
   append(item) {

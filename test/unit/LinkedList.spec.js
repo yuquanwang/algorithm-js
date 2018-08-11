@@ -21,13 +21,13 @@ describe('LinkedList', () => {
     const oneList = new LinkedList(10);
     expect(oneList.head.value).toBe(10);
     expect(oneList.tail.value).toBe(10);
-    expect(oneList.length).toBe(1);
+    expect(oneList.size).toBe(1);
 
     const obj = { str: 'ok' };
     const linkedList = new LinkedList([3, 6, 9, obj]);
     expect(linkedList.head.value).toEqual([3, 6, 9, obj]);
 
-    expect(linkedListSample.length).toBe(4);
+    expect(linkedListSample.size).toBe(4);
     expect(() => linkedListSample.getLength()).toThrow();
     expect(linkedListSample.head.value).toBe(1);
     expect(linkedListSample.head.next.value).toBe(5);
@@ -53,8 +53,10 @@ describe('LinkedList', () => {
 
   it('toString()方法', () => {
     expect(new LinkedList().toString()).toBe('LinkedList: null;');
-    expect(new LinkedList(1, { str: 'ok' }).toString()).toBe(`LinkedList: 1, ${({ str: 'ok' }).toString()};`);
-    expect(linkedListSample.toString()).toBe('LinkedList: 1, 5, 4, 7;');
+    expect(new LinkedList(1, { str: 'ok' }).toString()).toBe(`LinkedList: 1, ${({ str: 'ok' })};`);
+
+    linkedListSample.prepend(4);
+    expect(linkedListSample.toString()).toBe('LinkedList: 4, 1, 5, 4, 7;');
   });
 
   it('向后添加节点的方法', () => {

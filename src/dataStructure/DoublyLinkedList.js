@@ -47,7 +47,7 @@ export default class DoublyLinkedList {
       return i;
     };
 
-    this.length = getLength();
+    this.size = getLength();
   }
 
   has(value) {
@@ -127,6 +127,6 @@ export default class DoublyLinkedList {
     delete this.head;
     delete this.tail;
     delete this[Symbol.iterator];
-    delete this.length;
+    delete this.size;
   }
 }
