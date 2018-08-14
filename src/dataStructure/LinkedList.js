@@ -6,13 +6,9 @@ import { isEqual } from 'lodash';
 import Node from './Node';
 
 export default class LinkedList {
-  constructor(...args) {
+  constructor() {
     this.head = null;
     this.tail = null;
-
-    for (const item of args) {
-      this.append(item);
-    }
 
     // eslint-disable-next-line func-names
     this[Symbol.iterator] = function* () {
@@ -35,6 +31,18 @@ export default class LinkedList {
     };
 
     this.size = getLength();
+  }
+
+  getBegin() {
+    return this.head;
+  }
+
+  getEnd() {
+    let node = this.head;
+    while (node && node.next) {
+      node = node.next;
+    }
+    return node;
   }
 
   has(item) {

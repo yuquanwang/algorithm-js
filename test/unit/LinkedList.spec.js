@@ -6,9 +6,14 @@ import LinkedList from '../../src/dataStructure/LinkedList';
 describe('LinkedList', () => {
   let linkedListSample;
   let nullLinkedList;
+  const list = new LinkedList();
   beforeEach(() => {
     nullLinkedList = new LinkedList();
     linkedListSample = new LinkedList(1, 5, 4, 7);
+    list.append(0);
+    list.append(1);
+    list.append(2);
+    list.append(3);
   });
 
   afterEach(() => {
@@ -35,10 +40,13 @@ describe('LinkedList', () => {
     expect(linkedListSample.head.next.next.next.value).toBe(7);
   });
 
-  it('具有首尾两个节点', () => {
+  it('具有首尾两个节点, getBegin()、 getEnd()', () => {
     const linkedList = new LinkedList();
     expect(linkedList.head).toBeDefined();
     expect(linkedList.tail).toBeDefined();
+
+    expect(list.getBegin().value).toBe(0);
+    expect(list.getEnd().value).toBe(3);
   });
 
   it('has()方法', () => {
@@ -59,7 +67,7 @@ describe('LinkedList', () => {
     expect(linkedListSample.toString()).toBe('LinkedList: 4, 1, 5, 4, 7;');
   });
 
-  it('向后添加节点的方法', () => {
+  it('向后添加节点的append方法', () => {
     const linkedList = new LinkedList();
     linkedList.append(1);
     const { head } = linkedList;
