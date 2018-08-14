@@ -1,4 +1,4 @@
-import { LinkedListNode } from './LinkedList';
+import Node from './Node';
 
 export default class Queue {
   constructor() {
@@ -34,7 +34,7 @@ export default class Queue {
   }
 
   enqueue(item) {
-    const node = new LinkedListNode(item);
+    const node = new Node(item);
     if (!this.front) {
       this.front = node;
     }

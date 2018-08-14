@@ -1,7 +1,7 @@
 /**
  * Created by mutrix on 2018/8/2.
  */
-import LinkedList, { LinkedListNode } from '../../src/dataStructure/LinkedList';
+import LinkedList from '../../src/dataStructure/LinkedList';
 
 describe('LinkedList', () => {
   let linkedListSample;
@@ -98,13 +98,5 @@ describe('LinkedList', () => {
   it('类型错误', () => {
     expect(() => linkedListSample.insert(4, 'gro')).toThrow(TypeError);
     expect(() => linkedListSample.removeFrom('gro')).toThrow(TypeError);
-  });
-});
-
-describe('LinkedListNode节点', () => {
-  it('节点不接受null和undefined', () => {
-    expect(() => new LinkedListNode()).toThrow(TypeError);
-    expect(() => new LinkedListNode(null)).toThrowError(TypeError);
-    expect(() => new LinkedListNode(undefined)).toThrowError(TypeError);
   });
 });

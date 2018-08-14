@@ -3,16 +3,7 @@
  */
 
 import { isEqual } from 'lodash';
-
-export class LinkedListNode {
-  constructor(item) {
-    if (item === undefined || item === null) {
-      throw new TypeError('LinkedListNode constructor arg can not be undefinded or null');
-    }
-    this.value = item;
-    this.next = null;
-  }
-}
+import Node from './Node';
 
 export default class LinkedList {
   constructor(...args) {
@@ -62,7 +53,7 @@ export default class LinkedList {
   }
 
   append(item) {
-    const newNode = new LinkedListNode(item);
+    const newNode = new Node(item);
     if (!this.head) {
       this.head = newNode;
       this.tail = newNode;
@@ -73,7 +64,7 @@ export default class LinkedList {
   }
 
   prepend(item) {
-    const newNode = new LinkedListNode(item);
+    const newNode = new Node(item);
     if (!this.head) {
       this.head = newNode;
       this.tail = newNode;
