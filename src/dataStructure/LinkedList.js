@@ -2,17 +2,13 @@
  * Created by mutrix on 2018/8/2.
  */
 
-import { isEqual } from 'lodash';
 import Node from './Node';
 
 export default class LinkedList {
-  constructor(...args) {
+  constructor() {
     this.head = null;
     this.tail = null;
-
-    for (const item of args) {
-      this.append(item);
-    }
+    this.size = 0;
 
     // eslint-disable-next-line func-names
     this[Symbol.iterator] = function* () {
@@ -23,25 +19,22 @@ export default class LinkedList {
       }
       yield node ? node.value : null;
     };
-
-    const getLength = () => {
-      let node = this.head;
-      let length = node ? 1 : 0;
-      while (node && node.next) {
-        node = node.next;
-        length += 1;
-      }
-      return length;
-    };
-
-    this.size = getLength();
   }
 
-  has(item) {
-    for (const value of this) {
-      if (isEqual(value, item)) return true;
-    }
-    return false;
+  isEmpty() {
+    return !this.size;
+  }
+
+  getSize() {
+    return this.size;
+  }
+
+  getHead() {
+    return this.head;
+  }
+
+  getTail() {
+    return this.tail;
   }
 
   toString() {
@@ -61,6 +54,7 @@ export default class LinkedList {
       this.tail.next = newNode;
       this.tail = newNode;
     }
+    this.size += 1;
   }
 
   prepend(item) {
@@ -72,16 +66,62 @@ export default class LinkedList {
       newNode.next = this.head;
       this.head = newNode;
     }
+    this.size += 1;
   }
 
-  detachTail() {
+  insertAfter(value, item) {
     let node = this.head;
-    let preNode = this.head;
-    while (node && node.next) {
-      preNode = node;
-      node = node.next;
+    while (node && node.value !== value) {
+      node = node.getNext();
     }
-    this.tail = preNode;
-    this.tail.next = null;
+    if (!node) throw new ReferenceError('can not find required value to be inserted');
+    const newNode = new Node(item);
+    newNode.setNext(node.getNext());
+    node.setNext(newNode);
+    if (node === this.tail) this.tail = newNode;
+    this.size += 1;
+  }
+
+  removeAfter(value) {
+    let node = this.head;
+    while (node && node.value !== value) {
+      node = node.getNext();
+    }
+    if (!node) throw new ReferenceError('can not find required value to be removed after!');
+    const dropNode = node.getNext();
+    node.setNext(dropNode.getNext());
+    if (dropNode === this.getTail()) this.tail = node;
+    dropNode.setNext(null);
+    this.size -= 1;
+  }
+
+  detachHead() {
+    if (!this.head) throw new ReferenceError('empty list without head node!');
+    const node = this.head;
+    this.head = this.getHead().getNext();
+    this.size -= 1;
+    node.setValue(null);
+    node.setNext(null);
+  }
+
+  getValueAt(n) {
+    if (typeof n !== 'number') throw new TypeError('only number to be received!');
+    let i = 0;
+    for (const value of this) {
+      if (i === n) return value;
+      i += 1;
+    }
+    return null;
+  }
+
+  setValueAt(n, value) {
+    if (typeof n !== 'number') throw new TypeError('only number to be received!');
+    let i = 0;
+    let node = this.head;
+    while (node && i !== n) {
+      node = node.getNext();
+      i += 1;
+    }
+    node.setValue(value);
   }
 }
