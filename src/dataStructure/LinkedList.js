@@ -117,10 +117,11 @@ export default class LinkedList {
   setValueAt(n, value) {
     if (typeof n !== 'number') throw new TypeError('only number to be received!');
     let i = 0;
-    for (const item of this) {
-      if (i === n) return item;
+    let node = this.head;
+    while (node && i !== n) {
+      node = node.getNext();
       i += 1;
     }
-    return null;
+    node.setValue(value);
   }
 }

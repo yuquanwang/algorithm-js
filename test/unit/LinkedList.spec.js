@@ -129,6 +129,7 @@ describe('LinkedList', () => {
   it('给第n个节点设值setValueAt()', () => {
     linkedListSample.setValueAt(2, 9);
     expect(linkedListSample.getValueAt(2)).toBe(9);
+    expect(() => linkedListSample.setValueAt(10, 5)).toThrow(TypeError);
   });
 
   it('LinkedList可以使用迭代器for...of', () => {
